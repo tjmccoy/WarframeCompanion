@@ -7,6 +7,7 @@ dotenv.load_dotenv()
 category_name = "Warframe Companion Bot"
 channel_names = ["arbitration", "archon-hunt", "void-trader", "world-timers", "fissures", "sortie", "steel-path"]
 bot = d.Bot(intents = d.Intents.default())
+wf = wf_api('pc')
 
 @bot.event
 async def on_ready():
@@ -46,10 +47,24 @@ async def make_channels(guild: d.Guild):
     for channel in channel_names:
         await make_channel(guild, channel)
 
+async def display_fissures(guild: d.Guild, current_fissures):
+    information = ""
+    fissure_objects = [Fissure(fissure) for fissure in current_fissures]
+    for f in fissure_objects:
+        information += f"{f.node} | {f.missionType} ({f.tier})" + "\n"
+    await send_to_channel(guild, information[:2000], channel_names[4])
+        
+
 @bot.slash_command(description = "Creates WC text channels for your server.", name = "make-channels")
 async def slash_make_channels(ctx):
     await ctx.respond("Creating channels...")
     await make_channels(ctx.guild)
+
+@bot.slash_command(description = "Updates current void fissure data.", name = "fissures")
+async def slash_fissures(ctx):
+    await ctx.respond("Gathering fissures data...")
+    current_fissures = wf.get_fissure_info()
+    await display_fissures(ctx.guild, current_fissures)
 
 token = os.getenv('TOKEN')
 if token == None:
