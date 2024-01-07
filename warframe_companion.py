@@ -13,7 +13,6 @@ async def on_ready():
     print(f"Logged on as {bot.user}!")
     for guild in bot.guilds:
         await make_channels(guild)
-        await send_to_channel(guild, "Hello world", channel_names[0])
 
 async def clear_channel(guild: d.Guild, channel_name: str):
     channel = await make_channel(guild, channel_name)
