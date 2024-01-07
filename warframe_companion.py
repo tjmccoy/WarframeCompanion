@@ -1,18 +1,21 @@
-from pylotus import *
 import discord as d
 import dotenv
+import scheduler
 import os
+from pylotus import *
 
 dotenv.load_dotenv()
 category_name = "Warframe Companion Bot"
 channel_names = ["arbitration", "archon-hunt", "void-trader", "world-timers", "fissures", "sortie", "steel-path"]
 bot = d.Bot(intents = d.Intents.default())
+wf = wf_api('pc')
 
 @bot.event
 async def on_ready():
     print(f"Logged on as {bot.user}!")
     for guild in bot.guilds:
         await make_channels(guild)
+    await update_arbitration()
 
 async def clear_channel(guild: d.Guild, channel_name: str):
     channel = await make_channel(guild, channel_name)
@@ -45,6 +48,11 @@ async def make_channel(guild, channel_name) -> d.CategoryChannel:
 async def make_channels(guild: d.Guild):
     for channel in channel_names:
         await make_channel(guild, channel)
+
+async def update_arbitration():
+    for guild in bot.guilds:
+        await clear_channel(guild, "arbitration")
+        await send_to_channel(guild, "Arbitration information currently unavailable", channel_names[0])
 
 @bot.slash_command(description = "Creates WC text channels for your server.", name = "make-channels")
 async def slash_make_channels(ctx):
