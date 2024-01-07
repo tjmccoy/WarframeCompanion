@@ -1,7 +1,8 @@
-from pylotus import *
 import discord as d
 import dotenv
+import scheduler
 import os
+from pylotus import *
 
 dotenv.load_dotenv()
 category_name = "Warframe Companion Bot"
@@ -14,6 +15,7 @@ async def on_ready():
     print(f"Logged on as {bot.user}!")
     for guild in bot.guilds:
         await make_channels(guild)
+    await update_arbitration()
 
 async def clear_channel(guild: d.Guild, channel_name: str):
     channel = await make_channel(guild, channel_name)
@@ -54,6 +56,11 @@ async def display_fissures(guild: d.Guild, current_fissures):
         information += f"{f.node} | {f.missionType} ({f.tier})" + "\n"
     await send_to_channel(guild, information[:2000], channel_names[4])
         
+
+async def update_arbitration():
+    for guild in bot.guilds:
+        await clear_channel(guild, "arbitration")
+        await send_to_channel(guild, "Arbitration information currently unavailable", channel_names[0])
 
 @bot.slash_command(description = "Creates WC text channels for your server.", name = "make-channels")
 async def slash_make_channels(ctx):
