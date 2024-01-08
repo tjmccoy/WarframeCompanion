@@ -2,12 +2,12 @@ import discord as d
 
 MAX_MSG_LEN = 2000
 
-async def clear_channel(guild: d.Guild, channel_name: str):
-    channel = await make_channel(guild, channel_name)
+async def clear_channel(guild: d.Guild, channel_name: str, category_name: str = ""):
+    channel = await make_channel(guild, channel_name, category_name)
     await channel.purge()
 
-async def send_to_channel(guild: d.Guild, msg: str, channel_name: str):
-    channel = await make_channel(guild, channel_name)
+async def send_to_channel(guild: d.Guild, msg: str, channel_name: str, category_name: str = ""):
+    channel = await make_channel(guild, channel_name, category_name)
     remaining = msg
     while len(remaining) > MAX_MSG_LEN and '\n' in remaining: # If msg is too long and there are newlines
         end = remaining[:MAX_MSG_LEN].rfind('\n') # break up the message and send in chunks by line
@@ -23,7 +23,7 @@ async def make_channel(guild: d.Guild, channel_name: str, category_name = "") ->
     channel = None
     if (category_name != ""):
         for cat in guild.categories:
-            if cat.name == category:
+            if cat.name == category_name:
                 category = cat
 
         if category is None:
