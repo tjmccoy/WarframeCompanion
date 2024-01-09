@@ -4,11 +4,6 @@ from enum import Enum
 import pylotus as pl
 
 CATEGORY_NAME = "Warframe Companion Bot"
-async def wc_send_to_channel(guild: d.Guild, msg: str, channel_name: str):
-    await send_to_channel(guild, msg, channel_name, CATEGORY_NAME)
-
-async def wc_clear_channel(guild: d.Guild, channel_name: str):
-    await clear_channel(guild, channel_name, CATEGORY_NAME)
 
 class ChannelName(Enum):
     archon_hunt = "archon-hunt"
@@ -19,6 +14,13 @@ class ChannelName(Enum):
     sortie = "sortie"
     steel_path = "steel-path"
 
+async def wc_send_to_channel(guild: d.Guild, msg: str, channel_name: ChannelName):
+    await send_to_channel(guild, msg, channel_name.value, CATEGORY_NAME)
+
+async def wc_clear_channel(guild: d.Guild, channel_name: ChannelName):
+    await clear_channel(guild, channel_name.value, CATEGORY_NAME)
+
+
 async def initialize_guild(guild: d.Guild):
     await make_channels(guild)
     await display_arbitration(guild)
@@ -28,13 +30,13 @@ async def make_channels(guild: d.Guild):
         await make_channel(guild, channel_name.value, CATEGORY_NAME)
 
 async def display_fissures(guild: d.Guild, current_fissures: dict):
-    await wc_clear_channel(guild, ChannelName.fissures.value)
+    await wc_clear_channel(guild, ChannelName.fissures)
     information = ""
     fissure_objects = [pl.Fissure(fissure) for fissure in current_fissures]
     for f in fissure_objects:
         information += f"{f.node} | {f.missionType} ({f.tier})" + "\n"
-    await wc_send_to_channel(guild, information, ChannelName.fissures.value)
+    await wc_send_to_channel(guild, information, ChannelName.fissures)
 
 async def display_arbitration(guild: d.Guild):
-    await wc_clear_channel(guild, ChannelName.arbitration.value)
-    await wc_send_to_channel(guild, "Arbitration information currently unavailable", ChannelName.arbitration.value)
+    await wc_clear_channel(guild, ChannelName.arbitration)
+    await wc_send_to_channel(guild, "Arbitration information currently unavailable", ChannelName.arbitration)
