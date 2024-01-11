@@ -20,7 +20,6 @@ async def wc_send_to_channel(guild: d.Guild, msg: str, channel_name: ChannelName
 async def wc_clear_channel(guild: d.Guild, channel_name: ChannelName):
     await clear_channel(guild, channel_name.value, CATEGORY_NAME)
 
-
 async def initialize_guild(guild: d.Guild):
     await make_channels(guild)
     await display_arbitration(guild)
