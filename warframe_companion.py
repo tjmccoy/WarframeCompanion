@@ -1,11 +1,8 @@
 import dotenv
 import os
-import pylotus as pl
-import scheduler
 from warframe_companion_core import *
 
 bot = d.Bot(intents = d.Intents.default())
-wf = pl.wf_api('pc')
 
 @bot.event
 async def on_ready():
@@ -21,8 +18,14 @@ async def slash_make_channels(ctx):
 @bot.slash_command(description = "Updates current void fissure data.", name = "fissures")
 async def slash_fissures(ctx):
     await ctx.respond("Gathering fissures data...")
-    current_fissures = wf.get_fissure_info()
+    current_fissures = pyframe.get_fissures()
     await display_fissures(ctx.guild, current_fissures)
+
+@bot.slash_command(description = "Updates current void trader data.", name = "void-trader")
+async def slash_void_trader(ctx):
+    await ctx.respond("Gather void trader data...")
+    void_trader = pyframe.get_void_trader()
+    await display_void_trader(ctx.guild, void_trader)
 
 if __name__ == "__main__":
     dotenv.load_dotenv()
