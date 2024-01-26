@@ -47,11 +47,11 @@ async def display_void_trader(guild: d.Guild, void_trader: pyframe.VoidTrader):
         await wc_send_to_channel(guild, f"Void trader is not here. He will return on {str(void_trader.activation).split('+')[0]} UTC.", ChannelName.void_trader)
         return
     
-    information += f"Location: {void_trader.location}" + "\n"
-    information += f"Next Arrival: {void_trader.activation}" + "\n"
-    information += f"Next Departure: {void_trader.expiry}" + "\n"
-    information += f"Inventory: " + "\n"
+    information += f"Location: {void_trader.location}\n"
+    information += f"Next Arrival: {void_trader.activation}\n"
+    information += f"Next Departure: {void_trader.expiry}\n"
+    information += f"Inventory:\n"
     for i in void_trader.inventory:
-        information += f"{i.item} | {i.ducats} ducats | {i.credits} credits" + "\n"
+        information += f"{i.item} | {i.ducats} ducats | {i.credits} credits\n"
 
     await wc_send_to_channel(guild, information, ChannelName.void_trader)
