@@ -55,3 +55,25 @@ async def display_void_trader(guild: d.Guild, void_trader: pyframe.VoidTrader):
         information += f"{i.item} | {i.ducats} ducats | {i.credits} credits\n"
 
     await wc_send_to_channel(guild, information, ChannelName.void_trader)
+
+async def display_steel_path_status(guild: d.Guild, steel_path : pyframe.SteelPath):
+    await wc_clear_channel(guild, ChannelName.steel_path)
+    information = ""
+
+    information += f"Activation: {steel_path.activation}\n"
+    information += f"Expiry: {steel_path.expiry}\n"
+    information += f"\nCurrent Reward: {steel_path.current_reward.name}, Cost: {steel_path.current_reward.cost}\n"
+    information += f"Time Remaining: {steel_path.remaining}\n"
+    information += f"\nWeekly Offerings (Name, Cost):\n------------------------------------\n"
+    for mission in steel_path.rotation:
+        information += f"{mission.name}\t({mission.cost} Steel Essence)\n"
+    information += f"\nEvergreens (Name, Cost):\n------------------------------\n"
+    for item in steel_path.evergreens:
+        information += f"{item.name}\t({item.cost} Steel Essence)\n"
+    if not steel_path.incursions.active:
+        information += f"\nIncursions are not active at this time.\n"
+    else:
+        information += f"\nIncursions:\nID: {steel_path.incursions.id}\nActivation: {steel_path.incursions.id}\nExpiry: {steel_path.incursions.id}\n"
+    
+    await wc_send_to_channel(guild, information, ChannelName.steel_path)
+   
