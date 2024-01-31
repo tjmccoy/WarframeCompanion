@@ -1,1 +1,1 @@
-python-PyFrame==1.0.5
+python-PyFrame==1.0.6

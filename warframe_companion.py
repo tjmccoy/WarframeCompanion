@@ -31,7 +31,7 @@ async def slash_void_trader(ctx):
 async def slash_steel_path(ctx):
     await ctx.respond("Gathering Steel Path data...")
     steel_path = pyframe.get_steel_path()
-    await display_steel_path_status(ctx.guild, steel_path)
+    await display_steel_path(ctx.guild, steel_path)
 
 if __name__ == "__main__":
     dotenv.load_dotenv()
