@@ -27,6 +27,12 @@ async def slash_void_trader(ctx):
     void_trader = pyframe.get_void_trader()
     await display_void_trader(ctx.guild, void_trader)
 
+@bot.slash_command(description= "Displays current Steel Path information.", name = "steel-path")
+async def slash_steel_path(ctx):
+    await ctx.respond("Gathering Steel Path data...")
+    steel_path = pyframe.get_steel_path()
+    await display_steel_path_status(ctx.guild, steel_path)
+
 if __name__ == "__main__":
     dotenv.load_dotenv()
     token = os.getenv('TOKEN')
