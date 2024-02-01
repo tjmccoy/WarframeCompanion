@@ -56,7 +56,7 @@ async def display_void_trader(guild: d.Guild, void_trader: pyframe.VoidTrader):
 
     await wc_send_to_channel(guild, information, ChannelName.void_trader)
 
-async def display_steel_path_status(guild: d.Guild, steel_path : pyframe.SteelPath):
+async def display_steel_path(guild: d.Guild, steel_path : pyframe.SteelPath):
     await wc_clear_channel(guild, ChannelName.steel_path)
     information = ""
 
@@ -76,4 +76,21 @@ async def display_steel_path_status(guild: d.Guild, steel_path : pyframe.SteelPa
         information += f"\nIncursions:\nID: {steel_path.incursions.id}\nActivation: {steel_path.incursions.id}\nExpiry: {steel_path.incursions.id}\n"
     
     await wc_send_to_channel(guild, information, ChannelName.steel_path)
-   
+
+async def display_world_timers(guild: d.Guild, earth : pyframe.EarthCycle, cetus : pyframe.CetusCycle, vallis : pyframe.VallisCycle, cambion : pyframe.CambionCycle):
+    await wc_clear_channel(guild, ChannelName.world_timers)
+    information = ""
+    information += f"Earth:\n----------\n"
+    information += f"Is Day: {earth.is_day}\n"
+    information += f"Time Left: {earth.time_left}\n"
+    information += f"\nCetus:\n----------\n"
+    information += f"Is Day: {cetus.is_day}\n"
+    information += f"Time Left: {cetus.time_left}\n"
+    information += f"\nVallis:\n----------\n"
+    information += f"Is Warm: {vallis.is_warm}\n"
+    information += f"Time Left: {vallis.time_left}\n"
+    information += f"\nCambion:\n----------\n"
+    information += f"State: {cambion.state}\n"
+    information += f"Time Left: {cambion.time_left}\n"
+    
+    await wc_send_to_channel(guild, information, ChannelName.world_timers)
