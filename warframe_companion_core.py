@@ -95,3 +95,16 @@ async def display_world_timers(guild: d.Guild, earth : pyframe.EarthCycle, cetus
     information += f"Time Left: {cambion.time_left}\n"
     
     await wc_send_to_channel(guild, information, ChannelName.world_timers)
+
+async def display_sortie_status(guild: d.Guild, sortie : pyframe.Sortie):
+    await wc_clear_channel(guild, ChannelName.sortie)
+    information = ""
+    seperator = "\n----------\n"
+    
+    if sortie.active:
+        information += f"Boss{seperator}"
+        information += f"{sortie.boss} -- Expiring in: {sortie.expiry}\n"
+
+        information += f"Variants{seperator}"
+        for variant in sortie.variants:
+            information += f"{variant.mission_type} -- {variant.node} ({variant.planet}): {variant.modifier}\n"

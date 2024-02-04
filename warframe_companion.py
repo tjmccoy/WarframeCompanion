@@ -42,6 +42,13 @@ async def slash_world_timers(ctx):
     cambion = pyframe.get_cambion_cycle()
     await display_world_timers(ctx.guild, earth, cetus, vallis, cambion)
 
+@bot.slash_command(description= "Displays sortie status.", name= "sortie")
+async def slash_sortie(ctx):
+    await ctx.respond("Gathering current sortie status...")
+    sortie = pyframe.get_sortie()
+    await display_sortie_status(ctx.guild, sortie)
+
+
 if __name__ == "__main__":
     dotenv.load_dotenv()
     token = os.getenv('TOKEN')
