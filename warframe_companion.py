@@ -42,7 +42,6 @@ async def slash_world_timers(ctx):
     cambion = pyframe.get_cambion_cycle()
     await display_world_timers(ctx.guild, earth, cetus, vallis, cambion)
 
-
 if __name__ == "__main__":
     dotenv.load_dotenv()
     token = os.getenv('TOKEN')
