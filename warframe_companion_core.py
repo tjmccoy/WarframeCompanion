@@ -56,7 +56,7 @@ async def display_void_trader(guild: d.Guild, void_trader: pyframe.VoidTrader):
 
     await wc_send_to_channel(guild, information, ChannelName.void_trader)
 
-async def display_steel_path_status(guild: d.Guild, steel_path : pyframe.SteelPath):
+async def display_steel_path(guild: d.Guild, steel_path : pyframe.SteelPath):
     await wc_clear_channel(guild, ChannelName.steel_path)
     information = ""
 
