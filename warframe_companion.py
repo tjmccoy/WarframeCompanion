@@ -33,6 +33,15 @@ async def slash_steel_path(ctx):
     steel_path = pyframe.get_steel_path()
     await display_steel_path(ctx.guild, steel_path)
 
+@bot.slash_command(description= "Displays world timers.", name= "world-timers")
+async def slash_world_timers(ctx):
+    await ctx.respond("Gathering current world timers...")
+    earth = pyframe.get_earth_cycle()
+    cetus = pyframe.get_cetus_cycle()
+    vallis = pyframe.get_vallis_cycle()
+    cambion = pyframe.get_cambion_cycle()
+    await display_world_timers(ctx.guild, earth, cetus, vallis, cambion)
+
 if __name__ == "__main__":
     dotenv.load_dotenv()
     token = os.getenv('TOKEN')

@@ -76,4 +76,22 @@ async def display_steel_path(guild: d.Guild, steel_path : pyframe.SteelPath):
         information += f"\nIncursions:\nID: {steel_path.incursions.id}\nActivation: {steel_path.incursions.id}\nExpiry: {steel_path.incursions.id}\n"
     
     await wc_send_to_channel(guild, information, ChannelName.steel_path)
-   
+
+async def display_world_timers(guild: d.Guild, earth : pyframe.EarthCycle, cetus : pyframe.CetusCycle, vallis : pyframe.VallisCycle, cambion : pyframe.CambionCycle):
+    await wc_clear_channel(guild, ChannelName.world_timers)
+    information = ""
+    seperator = "\n----------\n"
+    information += f"Earth:{seperator}"
+    information += f"Is Day: {earth.is_day}\n"
+    information += f"Time Left: {earth.time_left}\n"
+    information += f"\nCetus:{seperator}"
+    information += f"Is Day: {cetus.is_day}\n"
+    information += f"Time Left: {cetus.time_left}\n"
+    information += f"\nVallis:{seperator}"
+    information += f"Is Warm: {vallis.is_warm}\n"
+    information += f"Time Left: {vallis.time_left}\n"
+    information += f"\nCambion:{seperator}"
+    information += f"State: {cambion.state}\n"
+    information += f"Time Left: {cambion.time_left}\n"
+    
+    await wc_send_to_channel(guild, information, ChannelName.world_timers)
